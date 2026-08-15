@@ -1,0 +1,37 @@
+// Unique IDs for all node types
+
+CREATE CONSTRAINT service_id IF NOT EXISTS
+FOR (s:Service)
+REQUIRE s.id IS UNIQUE;
+
+CREATE CONSTRAINT team_id IF NOT EXISTS
+FOR (t:Team)
+REQUIRE t.id IS UNIQUE;
+
+CREATE CONSTRAINT engineer_id IF NOT EXISTS
+FOR (e:Engineer)
+REQUIRE e.id IS UNIQUE;
+
+CREATE CONSTRAINT incident_id IF NOT EXISTS
+FOR (i:Incident)
+REQUIRE i.id IS UNIQUE;
+
+CREATE CONSTRAINT alert_id IF NOT EXISTS
+FOR (a:Alert)
+REQUIRE a.id IS UNIQUE;
+
+CREATE CONSTRAINT deployment_id IF NOT EXISTS
+FOR (d:Deployment)
+REQUIRE d.id IS UNIQUE;
+
+CREATE CONSTRAINT environment_id IF NOT EXISTS
+FOR (env:Environment)
+REQUIRE env.id IS UNIQUE;
+
+CREATE CONSTRAINT database_id IF NOT EXISTS
+FOR (db:Database)
+REQUIRE db.id IS UNIQUE;
+
+CREATE CONSTRAINT runbook_id IF NOT EXISTS
+FOR (r:Runbook)
+REQUIRE r.id IS UNIQUE;
