@@ -283,7 +283,7 @@ All application queries use parameters rather than string-concatenated Cypher.
 ### 1. Clone
 
 ```bash
-git clone <YOUR_GITHUB_REPOSITORY_URL>
+git clone https://github.com/Bhuvaneshwar24/devops-graph
 cd ai-devops-graph
 ```
 
@@ -360,24 +360,22 @@ For the hosted frontend, configure the API base URL through a Vite environment v
 Example:
 
 ```text
-VITE_API_BASE_URL=https://<your-backend>.onrender.com
+VITE_API_BASE_URL=https://devops-graph.onrender.com
 ```
 
 ## Deployment
 
 The application can be deployed as two services:
 
-```text
-Vercel
+Render Static Site
   │
   │ HTTPS REST API
   ▼
-Render
+Render Web Service
   │
   │ Bolt
   ▼
-CognoDB Cloud
-```
+CognoDB Cloud```
 
 ### Backend
 
@@ -416,7 +414,7 @@ dist
 Set:
 
 ```text
-VITE_API_BASE_URL=https://<your-backend>.onrender.com
+VITE_API_BASE_URL=https://devops-graph.onrender.com
 ```
 
 ## Security
@@ -453,16 +451,29 @@ VITE_API_BASE_URL=https://<your-backend>.onrender.com
 
 ## Screenshots
 
-Add the final application screenshots here before submission:
+### Operations Dashboard
 
-1. Operations Dashboard
-2. Service Dependency Graph
-3. Incident Impact
-4. Database Blast Radius
-5. Deployment Impact
-6. Graph Search
+![Operations Dashboard](docs/screenshots/dashboard.png)
 
-## Assessment Notes
+### Service Dependency Graph
+
+![Service Dependency Graph](docs/screenshots/service-graph.png)
+
+### Incident Impact
+
+![Incident Impact](docs/screenshots/incident-impact.png)
+
+### Database Blast Radius
+
+![Database Blast Radius](docs/screenshots/database-impact.png)
+
+### Deployment Impact
+
+![Deployment Impact](docs/screenshots/deployments.png)
+
+### Graph Search
+
+![Graph Search](docs/screenshots/search.png)## Assessment Notes
 
 This project was created as a full-stack graph database application for the Wexa AI CognoDB take-home assignment.
 
@@ -475,17 +486,17 @@ The project does **not** claim an AI/ML component; the use case is intentionally
 Repository:
 
 ```text
-<YOUR_GITHUB_REPOSITORY_URL>
+https://github.com/Bhuvaneshwar24/devops-graph
 ```
 
 Hosted demo:
 
 ```text
-<YOUR_HOSTED_FRONTEND_URL>
+https://devops-graph-frontend.onrender.com
 ```
 
 Screen recording:
 
 ```text
-<YOUR_SCREEN_RECORDING_LINK>
+No screen recording included
 ```
