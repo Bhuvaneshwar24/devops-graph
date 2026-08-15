@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000";
+  import.meta.env.VITE_API_BASE_URL || "https://devops-graph.onrender.com";
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -12,6 +12,21 @@ const api = axios.create({
 
 export async function getServices() {
   const response = await api.get("/api/services");
+  return response.data.data;
+}
+
+export async function getIncidents() {
+  const response = await api.get("/api/incidents");
+  return response.data.data;
+}
+
+export async function getDatabases() {
+  const response = await api.get("/api/databases");
+  return response.data.data;
+}
+
+export async function getDeployments() {
+  const response = await api.get("/api/deployments");
   return response.data.data;
 }
 

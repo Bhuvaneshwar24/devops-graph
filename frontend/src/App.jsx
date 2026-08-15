@@ -60,19 +60,20 @@ function App() {
         return <Dashboard services={services} />;
 
       case "graph":
-  return <GraphView services={services} />;
+        return <GraphView services={services} />;
 
       case "incidents":
-  return <IncidentPanel />;
+        return <IncidentPanel />;
 
-     case "database":
-  return <DatabaseImpact />;
+      case "databases":
+      case "database":
+        return <DatabaseImpact />;
 
       case "deployments":
-  return <Deployments />;
+        return <Deployments />;
 
       case "search":
-  return <Search />;
+        return <Search />;
 
       default:
         return <Dashboard services={services} />;

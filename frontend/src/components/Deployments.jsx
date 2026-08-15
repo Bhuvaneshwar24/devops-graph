@@ -1,15 +1,35 @@
 import { useEffect, useState } from "react";
 import { Rocket, RefreshCw, AlertTriangle } from "lucide-react";
-import { getDeploymentImpact } from "../services/api";
+import { getDeploymentImpact, getDeployments } from "../services/api";
 
 export default function Deployments() {
+  const [deployments, setDeployments] = useState([]);
+  const [selectedDeploymentId, setSelectedDeploymentId] = useState("");
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const deploymentId = "DEP-004";
+  const loadDeployments = async () => {
+    try {
+      const result = await getDeployments();
+      setDeployments(result || []);
 
-  const loadData = async () => {
+      if (result && result.length > 0) {
+        setSelectedDeploymentId((current) => current || result[0].id);
+      }
+    } catch (err) {
+      console.error("Failed to load deployments:", err);
+      setDeployments([]);
+      setSelectedDeploymentId("");
+    }
+  };
+
+  const loadData = async (deploymentId) => {
+    if (!deploymentId) {
+      setData([]);
+      return;
+    }
+
     try {
       setLoading(true);
       setError("");
@@ -19,17 +39,26 @@ export default function Deployments() {
     } catch (err) {
       console.error(err);
       setError("Unable to load deployment impact.");
+      setData([]);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    loadData();
+    loadDeployments();
   }, []);
 
-  const deployment = data[0];
+  useEffect(() => {
+    if (selectedDeploymentId) {
+      loadData(selectedDeploymentId);
+    }
+  }, [selectedDeploymentId]);
 
+  const selectedDeployment = deployments.find(
+    (deployment) => deployment.id === selectedDeploymentId
+  );
+  const deployment = data[0];
   const incidents = deployment?.related_incidents || [];
 
   return (
@@ -37,15 +66,15 @@ export default function Deployments() {
       <div className="incident-header">
         <div>
           <span className="incident-id">
-            {deployment?.deployment_id || deploymentId}
+            {deployment?.deployment_id || selectedDeployment?.id || "DEPLOYMENT"}
           </span>
 
           <h1>
-            {deployment?.version || "payment-2.8.1"}
+            {deployment?.version || selectedDeployment?.version || "Deployment Impact"}
           </h1>
 
           <span className="severity">
-            {deployment?.deployment_status || "DEPLOYMENT"}
+            {deployment?.deployment_status || selectedDeployment?.status || "DEPLOYMENT"}
           </span>
         </div>
 
@@ -64,9 +93,49 @@ export default function Deployments() {
             </p>
           </div>
 
-          <button onClick={loadData}>
+          <button onClick={() => loadData(selectedDeploymentId)}>
             <RefreshCw size={15} /> Refresh
           </button>
+        </div>
+
+        <div
+          style={{
+            padding: "18px 24px 0",
+            borderBottom: "1px solid #243044",
+          }}
+        >
+          <label
+            style={{
+              display: "block",
+              color: "#cbd5e1",
+              fontSize: "12px",
+              marginBottom: "8px",
+              fontWeight: 600,
+              textTransform: "uppercase",
+              letterSpacing: "0.06em",
+            }}
+          >
+            Deployment
+          </label>
+          <select
+            value={selectedDeploymentId}
+            onChange={(event) => setSelectedDeploymentId(event.target.value)}
+            style={{
+              width: "100%",
+              background: "#0f172a",
+              color: "#f8fafc",
+              border: "1px solid #334155",
+              borderRadius: "8px",
+              padding: "10px 12px",
+            }}
+          >
+            <option value="">Select a deployment</option>
+            {deployments.map((deploymentItem) => (
+              <option key={deploymentItem.id} value={deploymentItem.id}>
+                {deploymentItem.version} ({deploymentItem.id})
+              </option>
+            ))}
+          </select>
         </div>
 
         {loading && (
@@ -75,10 +144,16 @@ export default function Deployments() {
           </div>
         )}
 
-        {error && (
+        {!loading && !error && selectedDeploymentId && data.length === 0 && (
+          <div className="placeholder-page">
+            <h2>No deployment impact found</h2>
+          </div>
+        )}
+
+        {!loading && error && (
           <div className="placeholder-page">
             <h2>{error}</h2>
-            <button onClick={loadData}>Retry</button>
+            <button onClick={() => loadData(selectedDeploymentId)}>Retry</button>
           </div>
         )}
 

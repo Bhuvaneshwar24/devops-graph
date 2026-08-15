@@ -6,8 +6,7 @@ import ReactFlow, {
   MarkerType,
 } from "reactflow";
 import "reactflow/dist/style.css";
-
-const API_URL = "http://127.0.0.1:8000";
+import { getServiceDependencies } from "../services/api";
 
 function GraphView({ services = [] }) {
   const [selectedService, setSelectedService] = useState(
@@ -31,19 +30,11 @@ function GraphView({ services = [] }) {
         setLoading(true);
         setError("");
 
-        const response = await fetch(
-          `${API_URL}/api/services/${selectedService}/dependencies`
-        );
-
-        if (!response.ok) {
-          throw new Error(`API returned ${response.status}`);
-        }
-
-        const result = await response.json();
-        setDependencies(result.data || []);
+        const result = await getServiceDependencies(selectedService);
+        setDependencies(result || []);
       } catch (err) {
         console.error(err);
-        setError(err.message);
+        setError(err.message || "Unable to load dependency graph.");
         setDependencies([]);
       } finally {
         setLoading(false);

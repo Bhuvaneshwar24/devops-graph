@@ -42,6 +42,10 @@ export default function Search() {
       return <Rocket size={22} />;
     }
 
+    if (labels.includes("Database")) {
+      return <Server size={22} />;
+    }
+
     return <Server size={22} />;
   };
 
@@ -68,7 +72,7 @@ export default function Search() {
           <div>
             <h2>Search Graph</h2>
             <p>
-              Search services, incidents, deployments and graph entities.
+              Search services, incidents, databases, deployments and graph entities.
             </p>
           </div>
         </div>
@@ -128,7 +132,7 @@ export default function Search() {
           <div className="placeholder-page">
             <SearchIcon size={40} />
             <h2>No results found</h2>
-            <p>Try another service, incident ID or deployment.</p>
+            <p>Try another service, incident ID, database, or deployment.</p>
           </div>
         )}
 
@@ -142,7 +146,7 @@ export default function Search() {
 
                 <div>
                   <span>
-                    {item.labels?.join(" / ") || "Node"}
+                    {item.labels?.[0] || "Node"}
                   </span>
 
                   <strong>{item.name || item.id}</strong>

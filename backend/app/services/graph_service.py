@@ -69,6 +69,53 @@ def get_service_dependencies(
         return [record.data() for record in result]
 
 
+def get_incidents() -> list[dict[str, Any]]:
+    query = """
+    MATCH (i:Incident)
+    RETURN
+        i.id AS id,
+        i.title AS title,
+        i.severity AS severity,
+        i.status AS status
+    ORDER BY i.title
+    """
+
+    with driver.session() as session:
+        result = session.run(query)
+        return [record.data() for record in result]
+
+
+def get_databases() -> list[dict[str, Any]]:
+    query = """
+    MATCH (db:Database)
+    RETURN
+        db.id AS id,
+        db.name AS name,
+        db.engine AS engine
+    ORDER BY db.name
+    """
+
+    with driver.session() as session:
+        result = session.run(query)
+        return [record.data() for record in result]
+
+
+def get_deployments() -> list[dict[str, Any]]:
+    query = """
+    MATCH (d:Deployment)
+    RETURN
+        d.id AS id,
+        d.version AS version,
+        d.status AS status,
+        d.deployed_at AS deployed_at
+    ORDER BY d.version
+    """
+
+    with driver.session() as session:
+        result = session.run(query)
+        return [record.data() for record in result]
+
+
 def get_incident_impact(
     incident_id: str,
 ) -> list[dict[str, Any]]:
@@ -172,7 +219,7 @@ def search_graph(search_term: str) -> list[dict[str, Any]]:
     query = """
     MATCH (node)
     WHERE
-        (node:Service OR node:Incident OR node:Deployment)
+        (node:Service OR node:Incident OR node:Database OR node:Deployment)
         AND (
             toLower(coalesce(node.name, "")) CONTAINS
                 toLower($search_term)

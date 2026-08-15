@@ -473,11 +473,15 @@ VITE_API_BASE_URL=https://devops-graph.onrender.com
 
 ### Graph Search
 
-![Graph Search](docs/screenshots/search.png)## Assessment Notes
+![Graph Search](docs/screenshots/search.png)
+
+## Assessment Notes
 
 This project was created as a full-stack graph database application for the Wexa AI CognoDB take-home assignment.
 
 The application focuses on a real-world DevOps incident intelligence use case where graph relationships provide the primary value.
+
+The UI uses live graph-backed selectors for incidents, databases, and deployments, while preserving the existing dashboard, service dependency graph, and multi-hop incident analysis behavior.
 
 The project does **not** claim an AI/ML component; the use case is intentionally focused on graph-based infrastructure and incident analysis.
 
@@ -489,10 +493,22 @@ Repository:
 https://github.com/Bhuvaneshwar24/devops-graph
 ```
 
-Hosted demo:
+Hosted frontend:
 
 ```text
 https://devops-graph-frontend.onrender.com
+```
+
+Hosted backend:
+
+```text
+https://devops-graph.onrender.com
+```
+
+API docs:
+
+```text
+https://devops-graph.onrender.com/docs
 ```
 
 Screen recording:
