@@ -511,8 +511,8 @@ API docs:
 https://devops-graph.onrender.com/docs
 ```
 
-Screen recording:
+### Screen Recording
 
-```text
-No screen recording included
-```
+A short demonstration of the deployed application and its core graph-based incident intelligence features.
+
+[Watch the screen recording](https://drive.google.com/file/d/1_PcpMK1i5Syo-9v-Mt3ki_EKFMYtVc8v/view?usp=sharing)
